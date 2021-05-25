@@ -1,7 +1,6 @@
 package com.mbaguszulmi.moviedbapp.viewmodel
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +11,6 @@ import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.repository.MovieRepository
 import com.mbaguszulmi.moviedbapp.repository.TVRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class DetailViewModel: ViewModel() {
     private val movie: MutableLiveData<Movie?> = MutableLiveData<Movie?>()

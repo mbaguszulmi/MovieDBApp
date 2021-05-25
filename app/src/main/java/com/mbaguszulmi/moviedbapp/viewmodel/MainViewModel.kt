@@ -12,7 +12,6 @@ import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.repository.MovieRepository
 import com.mbaguszulmi.moviedbapp.repository.TVRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 const val TAG = "MainViewModel"
 

@@ -1,8 +1,8 @@
 package com.mbaguszulmi.moviedbapp.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mbaguszulmi.moviedbapp.R

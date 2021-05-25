@@ -14,8 +14,6 @@ import com.mbaguszulmi.moviedbapp.helper.Helper.getText
 import com.mbaguszulmi.moviedbapp.helper.Helper.withRecyclerView
 import com.mbaguszulmi.moviedbapp.view.adapter.MovieTVListAdapter
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 

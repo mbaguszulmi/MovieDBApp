@@ -2,13 +2,12 @@ package com.mbaguszulmi.moviedbapp.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mbaguszulmi.moviedbapp.R
 import com.mbaguszulmi.moviedbapp.databinding.FragmentTvListBinding
 import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.view.activity.DetailActivity
