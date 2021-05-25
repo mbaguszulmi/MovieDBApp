@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MovieDBApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="overview_dummy">Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</string>
+    <string name="tab_movies">Movies</string>
+    <string name="tab_tvs">TVs</string>
+    <string name="text_duration">%1$d min</string>
+    <string name="text_episodes">%1$d episodes</string>
+    <string name="text_seasons">%1$d seasons</string>
+    <string name="text_share_movie">Watch this movie now! Get more info from this page %1$s</string>
+    <string name="text_share_tv">Watch this tv show now! Get more info from this page %1$s</string>
+    <string name="btn_text_visit_movie">Visit Movie Page</string>
+    <string name="btn_text_visit_tv">Visit TV Page</string>
+</resources>
