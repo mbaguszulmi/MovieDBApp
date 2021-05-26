@@ -2,6 +2,8 @@ package com.mbaguszulmi.moviedbapp.model.network
 
 import com.google.gson.annotations.SerializedName
 import com.mbaguszulmi.moviedbapp.model.database.entities.Genre
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 data class Movie(
     val id : Int,
