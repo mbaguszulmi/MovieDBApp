@@ -1,18 +1,31 @@
 package com.mbaguszulmi.moviedbapp.view.activity
 
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.mbaguszulmi.moviedbapp.R
+import com.mbaguszulmi.moviedbapp.helper.Helper.getRatingBarValue
 import com.mbaguszulmi.moviedbapp.helper.Helper.getText
 import com.mbaguszulmi.moviedbapp.helper.Helper.withRecyclerView
+import com.mbaguszulmi.moviedbapp.model.database.entities.Genre
+import com.mbaguszulmi.moviedbapp.model.network.Movie
+import com.mbaguszulmi.moviedbapp.model.network.getGenresStr
+import com.mbaguszulmi.moviedbapp.model.network.getRating
 import com.mbaguszulmi.moviedbapp.view.adapter.MovieTVListAdapter
+import org.hamcrest.Matchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,26 +34,22 @@ const val TAG = "MainActivityTest"
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class MainActivityTest {
-    // TESTING SCENARIO
-    //
-    // Open MainActivity
-    // Wait for 10 seconds to load movies and tv show
-    // click on movies tab and check if movie list exist
-    // click on 1st item on movie list -> check title on movie details.
-    // click on 2nd item on movie list -> check title on movie details.
-    // ...
-    // click on 20th item on movie list -> check title on movie details.
-    // click on tvs tab and check if tv list exist
-    // click on 1st item on tv list -> check title on tv details.
-    // click on 2nd item on tv list -> check title on tv details.
-    // ...
-    // click on 20th item on tv list -> check title on tv details.
+
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
     fun setUp() {
-        ActivityScenario.launch(MainActivity::class.java)
+        scenario = ActivityScenario.launch(MainActivity::class.java)
     }
 
+    // Menampilkan MainActivity
+    //// Pastikan memiliki tab layout
+    //// Pastikan dapat berpindah ke movies atau tvs
+    //// Pastikan ketika berpindah ke tab movies, terdapat elemen dengan id R.id.rv_movies
+    //// Pastikan ketika berpindah ke tab tvs, terdapat elemen dengan id R.id.rv_tvs
+    //// Pastikan di dalam tab movies, terdapat 20 item di dalam recycler view dengan id R.id.rv_movies
+    //// Pastikan di dalam tab tvs, terdapat 20 item di dalam recycler view dengan id R.id.rv_tvs
+    //// Pastikan tiap - tiap navigasi ke detail dari item movie atau tv menampilkan data yang sama (dapat diperiksa dari judul yang sama)
     @Test
     fun checkItemSize() {
         Thread.sleep(10000)
