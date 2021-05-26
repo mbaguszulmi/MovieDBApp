@@ -1,8 +1,6 @@
 package com.mbaguszulmi.moviedbapp.view.activity
 
-import android.app.Instrumentation
 import android.content.Intent
-import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
@@ -11,7 +9,6 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.mbaguszulmi.moviedbapp.R
 import com.mbaguszulmi.moviedbapp.helper.Helper
@@ -22,10 +19,7 @@ import com.mbaguszulmi.moviedbapp.model.network.getGenresStr
 import com.mbaguszulmi.moviedbapp.model.network.getRating
 import org.hamcrest.Matchers
 import org.junit.After
-import org.junit.Before
-
-import org.junit.Assert.*
-import org.junit.Rule
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.math.abs
