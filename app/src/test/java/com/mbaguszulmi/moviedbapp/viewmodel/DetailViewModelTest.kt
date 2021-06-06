@@ -51,7 +51,7 @@ class DetailViewModelTest : TestCase() {
                     "expert determined to protecting him - and a forest fire threatening to consume " +
                     "them all.", 1482.25, "/xCEg6KowNISWvMh8GvPSxtdf9TO.jpg",
             "2021-05-05", 100, "Released", "Nature finds a way.",
-            "Those Who Wish Me Dead", 7.0, 394)
+            "Those Who Wish Me Dead", 7.0, 396)
 
         detailViewModel.getMovie(instrumentationContext, expectedMovieId) {
             // Do Nothing on failure
@@ -97,7 +97,7 @@ class DetailViewModelTest : TestCase() {
                     "revenge and proving he was framed for his sister's murder, Álex sets out " +
                     "to unearth much more than the crime's real culprit.",
             725.655, "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg", "Returning Series",
-            "", "Scripted", 7.8, 772)
+            "", "Scripted", 7.8, 773)
 
         detailViewModel.getTV(instrumentationContext, expectedTVId) {
             // Do Nothing on failure
