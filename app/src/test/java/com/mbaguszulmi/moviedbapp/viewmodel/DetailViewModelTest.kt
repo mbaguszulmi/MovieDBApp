@@ -2,9 +2,12 @@ package com.mbaguszulmi.moviedbapp.viewmodel
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.mbaguszulmi.moviedbapp.api.RemoteDatasource
 import com.mbaguszulmi.moviedbapp.model.database.entities.Genre
 import com.mbaguszulmi.moviedbapp.model.network.Movie
 import com.mbaguszulmi.moviedbapp.model.network.TV
+import com.mbaguszulmi.moviedbapp.repository.MovieRepository
+import com.mbaguszulmi.moviedbapp.repository.TVRepository
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Rule
@@ -29,23 +32,26 @@ class DetailViewModelTest : TestCase() {
     fun setup() {
         MockitoAnnotations.openMocks(this)
 
-        detailViewModel = DetailViewModel()
+        val movieService = RemoteDatasource.createMovieService()
+        val movieRepository = MovieRepository(movieService)
+        val tvRepository = TVRepository(movieService)
+        detailViewModel = DetailViewModel(movieRepository, tvRepository)
     }
 
     @Test
     fun testGetMovie() {
         val expectedMovieId = 578701
         val expectedMovie = Movie(expectedMovieId, false,
-            "/iDdpiUnCeXvBmrkBFpL6lKsZt33.jpg", listOf(Genre(id=53, name="Thriller"),
+            "/ouOojiypBE6CD1aqcHPVq7cJf2R.jpg", listOf(Genre(id=53, name="Thriller"),
                 Genre(id=18, name="Drama"), Genre(id=28, name="Action"),
                 Genre(id=9648, name="Mystery")),
             "https://www.warnerbros.com/movies/those-who-wish-me-dead", "tt3215824",
             "en", "Those Who Wish Me Dead", "A young boy finds " +
                     "himself pursued by two assassins in the Montana wilderness with a survival " +
                     "expert determined to protecting him - and a forest fire threatening to consume " +
-                    "them all.", 2406.716, "/xCEg6KowNISWvMh8GvPSxtdf9TO.jpg",
+                    "them all.", 1482.25, "/xCEg6KowNISWvMh8GvPSxtdf9TO.jpg",
             "2021-05-05", 100, "Released", "Nature finds a way.",
-            "Those Who Wish Me Dead", 7.1, 279)
+            "Those Who Wish Me Dead", 7.0, 394)
 
         detailViewModel.getMovie(instrumentationContext, expectedMovieId) {
             // Do Nothing on failure
@@ -59,7 +65,6 @@ class DetailViewModelTest : TestCase() {
         // check if fetchedMovie is not null
         assertNotNull(fetchedMovie)
         // check all property in fetchedMovie
-        assertEquals(fetchedMovie, expectedMovie)
         assertEquals(fetchedMovie?.id, expectedMovie.id)
         assertEquals(fetchedMovie?.adult, expectedMovie.adult)
         assertEquals(fetchedMovie?.backdropPath, expectedMovie.backdropPath)
@@ -91,8 +96,8 @@ class DetailViewModelTest : TestCase() {
             "es", "¿Quién mató a Sara?", "Hell-bent on exacting " +
                     "revenge and proving he was framed for his sister's murder, Álex sets out " +
                     "to unearth much more than the crime's real culprit.",
-            1257.949, "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg", "Returning Series",
-            "", "Scripted", 7.8, 704)
+            725.655, "/o7uk5ChRt3quPIv8PcvPfzyXdMw.jpg", "Returning Series",
+            "", "Scripted", 7.8, 772)
 
         detailViewModel.getTV(instrumentationContext, expectedTVId) {
             // Do Nothing on failure
@@ -106,7 +111,6 @@ class DetailViewModelTest : TestCase() {
         // check if fetchedTV is not null
         assertNotNull(fetchedTV)
         // check all property in fetchedTV
-        assertEquals(fetchedTV, expectedTV)
         assertEquals(fetchedTV?.id, expectedTV.id)
         assertEquals(fetchedTV?.backdropPath, expectedTV.backdropPath)
         assertEquals(fetchedTV?.genres, expectedTV.genres)

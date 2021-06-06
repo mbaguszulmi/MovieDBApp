@@ -7,19 +7,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mbaguszulmi.moviedbapp.helper.EspressoIdlingResource
 import com.mbaguszulmi.moviedbapp.model.network.Movie
 import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.repository.MovieRepository
 import com.mbaguszulmi.moviedbapp.repository.TVRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 const val TAG = "MainViewModel"
 
-class MainViewModel: ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val movieRepository: MovieRepository,
+    private val tvRepository: TVRepository
+) : ViewModel() {
     private val movies = MutableLiveData<List<Movie>>()
     private val tvs = MutableLiveData<List<TV>>()
-    private val movieRepository = MovieRepository()
-    private val tvRepository = TVRepository()
     private val isLoadingMovies = MutableLiveData<Boolean>()
     private val isLoadingTVs = MutableLiveData<Boolean>()
 
@@ -41,6 +46,7 @@ class MainViewModel: ViewModel() {
 
     fun refreshMovies(context: Context) {
         viewModelScope.launch {
+            EspressoIdlingResource.increment()
             isLoadingMovies.value = true
 
             try {
@@ -56,11 +62,15 @@ class MainViewModel: ViewModel() {
             }
 
             isLoadingMovies.value = false
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 
     fun refreshTvs(context: Context) {
         viewModelScope.launch {
+            EspressoIdlingResource.increment()
             isLoadingTVs.value = true
 
             try {
@@ -74,6 +84,9 @@ class MainViewModel: ViewModel() {
             }
 
             isLoadingTVs.value = false
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 }

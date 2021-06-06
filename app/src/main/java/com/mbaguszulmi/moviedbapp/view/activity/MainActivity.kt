@@ -11,7 +11,9 @@ import com.mbaguszulmi.moviedbapp.view.adapter.MainTabAdapter
 import com.mbaguszulmi.moviedbapp.view.fragment.MovieListFragment
 import com.mbaguszulmi.moviedbapp.view.fragment.TVListFragment
 import com.mbaguszulmi.moviedbapp.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel

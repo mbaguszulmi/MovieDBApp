@@ -1,13 +1,15 @@
 package com.mbaguszulmi.moviedbapp.repository
 
-import com.mbaguszulmi.moviedbapp.api.MovieApi
+import com.mbaguszulmi.moviedbapp.api.RemoteDatasource
+import com.mbaguszulmi.moviedbapp.api.interfaces.MovieService
 import com.mbaguszulmi.moviedbapp.model.network.Movie
 
-class MovieRepository {
-    private val movieApi = MovieApi.getService()
+class MovieRepository(
+    private val movieService: MovieService
+) {
 
     suspend fun getMovies(): List<Movie> {
-        val movieDiscoverResponse = movieApi.discoverMovies(MovieApi.apiKey)
+        val movieDiscoverResponse = movieService.discoverMovies(RemoteDatasource.apiKey)
 
         if (movieDiscoverResponse.isSuccessful) {
             return movieDiscoverResponse.body()!!.results
@@ -16,7 +18,7 @@ class MovieRepository {
     }
 
     suspend fun getMovie(id: Int): Movie? {
-        val movieResponse = movieApi.getMovieById(id, MovieApi.apiKey)
+        val movieResponse = movieService.getMovieById(id, RemoteDatasource.apiKey)
 
         if (movieResponse.isSuccessful) {
             return movieResponse.body()!!

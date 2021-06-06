@@ -13,12 +13,14 @@ import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.view.activity.DetailActivity
 import com.mbaguszulmi.moviedbapp.view.adapter.MovieTVListAdapter
 import com.mbaguszulmi.moviedbapp.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  * Use the [TVListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class TVListFragment : Fragment() {
     private var _binding: FragmentTvListBinding? = null
     private val binding get() = _binding!!
@@ -26,14 +28,10 @@ class TVListFragment : Fragment() {
     private lateinit var movieTVListAdapter: MovieTVListAdapter
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTvListBinding.inflate(layoutInflater, container, false
         )

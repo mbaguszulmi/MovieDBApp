@@ -6,18 +6,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mbaguszulmi.moviedbapp.helper.EspressoIdlingResource
 import com.mbaguszulmi.moviedbapp.model.network.Movie
 import com.mbaguszulmi.moviedbapp.model.network.TV
 import com.mbaguszulmi.moviedbapp.repository.MovieRepository
 import com.mbaguszulmi.moviedbapp.repository.TVRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel: ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val movieRepository: MovieRepository,
+    private val tvRepository: TVRepository
+) : ViewModel() {
+
     private val movie: MutableLiveData<Movie?> = MutableLiveData<Movie?>()
     private val tv: MutableLiveData<TV?> = MutableLiveData<TV?>()
     private val isLoading: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    private val movieRepository = MovieRepository()
-    private val tvRepository = TVRepository()
 
     init {
         isLoading.value = false
@@ -33,6 +39,7 @@ class DetailViewModel: ViewModel() {
 
     fun getMovie(context: Context, id: Int, onFailure: () -> Unit) {
         viewModelScope.launch {
+            EspressoIdlingResource.increment()
             isLoading.value = true
 
             try {
@@ -52,11 +59,16 @@ class DetailViewModel: ViewModel() {
             }
 
             isLoading.value = false
+
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 
     fun getTV(context: Context, id: Int, onFailure: () -> Unit) {
         viewModelScope.launch {
+            EspressoIdlingResource.increment()
             isLoading.value = true
 
             try {
@@ -76,6 +88,9 @@ class DetailViewModel: ViewModel() {
             }
 
             isLoading.value = false
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                EspressoIdlingResource.decrement()
+            }
         }
     }
 }

@@ -4,15 +4,18 @@ import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.mbaguszulmi.moviedbapp.R
+import com.mbaguszulmi.moviedbapp.helper.EspressoIdlingResource
 import com.mbaguszulmi.moviedbapp.helper.Helper.getText
 import com.mbaguszulmi.moviedbapp.helper.Helper.withRecyclerView
 import com.mbaguszulmi.moviedbapp.view.adapter.MovieTVListAdapter
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +30,12 @@ class MainActivityTest {
     @Before
     fun setUp() {
         scenario = ActivityScenario.launch(MainActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource())
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource())
     }
 
     // Menampilkan MainActivity
@@ -39,7 +48,7 @@ class MainActivityTest {
     //// Pastikan tiap - tiap navigasi ke detail dari item movie atau tv menampilkan data yang sama (dapat diperiksa dari judul yang sama)
     @Test
     fun checkItemSize() {
-        Thread.sleep(10000)
+//        Thread.sleep(10000)
 
         // check if change to movies tab is working
         onView(withText(R.string.tab_movies)).perform(click())
@@ -56,7 +65,7 @@ class MainActivityTest {
                 .perform(click())
             Log.d(TAG, "Current movie Title $i = $text")
 
-            Thread.sleep(1000)
+//            Thread.sleep(1000)
 
             onView(withId(R.id.tv_title)).check(matches(withText(text)))
 
@@ -78,7 +87,7 @@ class MainActivityTest {
                 .perform(click())
             Log.d(TAG, "Current tv Title $i = $text")
 
-            Thread.sleep(1000)
+//            Thread.sleep(1000)
 
             onView(withId(R.id.tv_title)).check(matches(withText(text)))
 

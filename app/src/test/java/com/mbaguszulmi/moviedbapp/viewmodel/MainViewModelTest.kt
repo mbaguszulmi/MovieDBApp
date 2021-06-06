@@ -2,6 +2,9 @@ package com.mbaguszulmi.moviedbapp.viewmodel
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.mbaguszulmi.moviedbapp.api.RemoteDatasource
+import com.mbaguszulmi.moviedbapp.repository.MovieRepository
+import com.mbaguszulmi.moviedbapp.repository.TVRepository
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Rule
@@ -26,7 +29,10 @@ class MainViewModelTest : TestCase() {
     fun setup() {
         MockitoAnnotations.openMocks(this)
 
-        mainViewModel = MainViewModel()
+        val movieService = RemoteDatasource.createMovieService()
+        val movieRepository = MovieRepository(movieService)
+        val tvRepository = TVRepository(movieService)
+        mainViewModel = MainViewModel(movieRepository, tvRepository)
     }
 
     @Test

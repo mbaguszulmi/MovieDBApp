@@ -3,18 +3,23 @@ package com.mbaguszulmi.moviedbapp.view.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.mbaguszulmi.moviedbapp.R
 import com.mbaguszulmi.moviedbapp.databinding.ActivityDetailBinding
+import com.mbaguszulmi.moviedbapp.helper.EspressoIdlingResource
 import com.mbaguszulmi.moviedbapp.model.network.getGenresStr
 import com.mbaguszulmi.moviedbapp.model.network.getPosterUrl
 import com.mbaguszulmi.moviedbapp.model.network.getRating
 import com.mbaguszulmi.moviedbapp.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
     companion object {
         const val ITEM_ID = "__item_id__"
@@ -29,7 +34,7 @@ class DetailActivity : AppCompatActivity() {
     private var id: Int = 0
     private var itemType: Int = -1
 
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +44,6 @@ class DetailActivity : AppCompatActivity() {
 
         id = intent.getIntExtra(ITEM_ID, 0)
         itemType = intent.getIntExtra(ITEM_TYPE, -1)
-
-        detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         initView()
     }
@@ -72,8 +75,16 @@ class DetailActivity : AppCompatActivity() {
                     binding.tvOverviewContent.text = it.overview
                     binding.rbarContent.rating = it.getRating().toFloat()
                     binding.btnVisitHomePage.setOnClickListener {_ ->
+                        EspressoIdlingResource.increment()
                         val visitIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.homepage))
                         startActivity(visitIntent)
+
+                        // add 5 secs to finish browser load and moving transition
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                                EspressoIdlingResource.decrement()
+                            }
+                        }, 5000)
                     }
                     binding.btnVisitHomePage.text = getString(R.string.btn_text_visit_movie)
 
@@ -122,8 +133,16 @@ class DetailActivity : AppCompatActivity() {
                     binding.tvOverviewContent.text = it.overview
                     binding.rbarContent.rating = it.getRating().toFloat()
                     binding.btnVisitHomePage.setOnClickListener {_ ->
+                        EspressoIdlingResource.increment()
                         val visitIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.homepage))
                         startActivity(visitIntent)
+
+                        // add 5 secs to finish browser load and moving transition
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                                EspressoIdlingResource.decrement()
+                            }
+                        }, 5000)
                     }
                     binding.btnVisitHomePage.text = getString(R.string.btn_text_visit_tv)
 

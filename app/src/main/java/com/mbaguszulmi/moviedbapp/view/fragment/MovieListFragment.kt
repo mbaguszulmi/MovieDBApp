@@ -14,6 +14,7 @@ import com.mbaguszulmi.moviedbapp.model.network.Movie
 import com.mbaguszulmi.moviedbapp.view.activity.DetailActivity
 import com.mbaguszulmi.moviedbapp.view.adapter.MovieTVListAdapter
 import com.mbaguszulmi.moviedbapp.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 const val TAG = "MovieListFragment"
 
@@ -22,6 +23,7 @@ const val TAG = "MovieListFragment"
  * Use the [MovieListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
@@ -29,14 +31,10 @@ class MovieListFragment : Fragment() {
     private lateinit var movieTVListAdapter: MovieTVListAdapter
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
 
