@@ -37,10 +37,6 @@ class TVRepositoryTest {
         tvRepository = TVRepository(movieService)
     }
 
-    @After
-    fun tearDown() {
-    }
-
     @ExperimentalCoroutinesApi
     @Test
     fun getTVs() {
